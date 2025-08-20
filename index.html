@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Flow - Streaming Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #9147ff;
+            --primary-dark: #772ce8;
+            --secondary: #efeff1;
+            --dark: #0e0e10;
+            --dark-light: #18181b;
+            --gray: #1f1f23;
+            --light-gray: #bf94ff;
+            --text: #efeff1;
+            --text-muted: #adadb8;
+            --success: #00d084;
+            --warning: #eab300;
+            --danger: #eb0400;
+            --card-bg: #18181b;
+            --card-border: #3a3a3d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--dark-light);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--text);
+            margin-right: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 20px;
+            margin-top: 30px;
+            flex: 1;
+        }
+        
+        .sidebar {
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-section h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-section h3 i {
+            margin-right: 10px;
+        }
+        
+        .sidebar-section ul {
+            list-style: none;
+        }
+        
+        .sidebar-section ul li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-section ul li i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .sidebar-section ul li a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .sidebar-section ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        /* Stream Grid */
+        .stream-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stream-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid var(--card-border);
+        }
+        
+        .stream-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stream-thumbnail {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stream-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .stream-card:hover .stream-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .live-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--danger);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .live-badge i {
+            margin-right: 5px;
+        }
+        
+        .viewer-count {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .viewer-count i {
+            margin-right: 5px;
+            color: var(--danger);
+        }
+        
+        .stream-info {
+            padding: 15px;
+        }
+        
+        .stream-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .streamer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .streamer-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        
+        .streamer-name {
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+        }
+        
+        .stream-game {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        /* Create Stream Section */
+        .create-stream {
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .create-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .create-option {
+            background: linear-gradient(145deg, #1f1f23, #2a2a2f);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .create-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .create-option i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .create-option h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .create-option p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        /* Auth Pages */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0;
+        }
+        
+        .auth-card {
+            background-color: var(--dark-light);
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .auth-header p {
+            color: var(--text-muted);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--dark);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .auth-footer p {
+            color: var(--text-muted);
+        }
+        
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Stream Page */
+        .stream-player {
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .stream-info-panel {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .streamer-details {
+            display: flex;
+            align-items: center;
+        }
+        
+        .streamer-details img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .stream-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-container {
+            background-color: var(--dark-light);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--dark);
+            border-radius: 6px;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            background-color: var(--dark);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            color: var(--text);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark-light);
+            padding: 40px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--card-border);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column ul li a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: var(--text);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-muted);
+        }
+        
+        /* Page Styles */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-20 {
+            margin-top: 20px;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        
+        .w-100 {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#" onclick="showPage('schedules')"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                    <li><a href="#" onclick="showPage('videos')"><i class="fas fa-video"></i> Videos</a></li>
+                    <li><a href="#" onclick="showPage('stream')"><i class="fas fa-broadcast-tower"></i> Live Stream</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <a href="#" class="btn btn-outline" onclick="showPage('login')">Log In</a>
+                <a href="#" class="btn btn-primary" onclick="showPage('signup')">Sign Up</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="container main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-globe"></i> STREAMING</h3>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#" onclick="showPage('schedules')"><i class="fas fa-calendar-alt"></i> Schedules</a></li>
+                        <li><a href="#" onclick="showPage('videos')"><i class="fas fa-video"></i> Videos</a></li>
+                        <li><a href="#" onclick="showPage('chat')"><i class="fas fa-comments"></i> Unified Chat</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-share-alt"></i> DESTINATIONS</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li><a href="#"><i class="fab fa-twitch"></i> Twitch</a></li>
+                        <li><a href="#"><i class="fas fa-link"></i> Hosted Live Pages</a></li>
+                        <li><a href="#"><i class="fas fa-code"></i> Embed on Web</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-users"></i> TEAM MANAGEMENT</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-user-friends"></i> Members</a></li>
+                        <li><a href="#"><i class="fas fa-handshake"></i> Affiliate Program</a></li>
+                    </ul>
+                </div>
+            </aside>
+            
+            <!-- Content Area -->
+            <main class="content">
+                <!-- Create Stream Section -->
+                <section class="create-stream">
+                    <h2 class="section-title"><i class="fas fa-plus-circle"></i> Create Stream</h2>
+                    
+                    <div class="create-options">
+                        <div class="create-option">
+                            <i class="fas fa-broadcast-tower"></i>
+                            <h3>LIVE Studio</h3>
+                            <p>Real-time streams, live selling & more</p>
+                        </div>
+                        
+                        <div class="create-option">
+                            <i class="fas fa-desktop"></i>
+                            <h3>Connect OBS, Zoom, etc.</h3>
+                            <p>Real-time streaming via external sources</p>
+                        </div>
+                        
+                        <div class="create-option">
+                            <i class="fas fa-film"></i>
+                            <h3>Pre-recorded Stream</h3>
+                            <p>Stream video files, playlists & recordings</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Streams & Schedules -->
+                <h2 class="section-title"><i class="fas fa-broadcast-tower"></i> Live Streams</h2>
+                <div class="stream-grid">
+                    <!-- Stream Card 1 -->
+                    <div class="stream-card" onclick="showPage('stream')">
+                        <div class="stream-thumbnail">
+                            <img src="https://placehold.co/600x340/9147ff/ffffff?text=Gaming+Stream" alt="Stream Thumbnail">
+                            <div class="live-badge"><i class="fas fa-circle"></i> LIVE</div>
+                            <div class="viewer-count"><i class="fas fa-eye"></i> 3.2K</div>
+                        </div>
+                        <div class="stream-info">
+                            <h3 class="stream-title">VALORANT Tournament Finals - Watch Party!</h3>
+                            <div class="streamer-info">
+                                <img src="https://placehold.co/40x40/9147ff/ffffff?text=J" alt="Streamer Avatar" class="streamer-avatar">
+                                <a href="#" class="streamer-name">JesseStreams</a>
+                            </div>
+                            <div class="stream-game">VALORANT • FPS</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stream Card 2 -->
+                    <div class="stream-card" onclick="showPage('stream')">
+                        <div class="stream-thumbnail">
+                            <img src="https://placehold.co/600x340/009d84/ffffff?text=Music+Stream" alt="Stream Thumbnail">
+                            <div class="live-badge"><i class="fas fa-circle"></i> LIVE</div>
+                            <div class="viewer-count"><i class="fas fa-eye"></i> 1.7K</div>
+                        </div>
+                        <div class="stream-info">
+                            <h3 class="stream-title">Chill Lofi Beats for Coding/Studying 🎵</h3>
+                            <div class="streamer-info">
+                                <img src="https://placehold.co/40x40/009d84/ffffff?text=M" alt="Streamer Avatar" class="streamer-avatar">
+                                <a href="#" class="streamer-name">MelodyMaker</a>
+                            </div>
+                            <div class="stream-game">Music • Lofi Hip Hop</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stream Card 3 -->
+                    <div class="stream-card" onclick="showPage('stream')">
+                        <div class="stream-thumbnail">
+                            <img src="https://placehold.co/600x340/eb0400/ffffff?text=Talk+Show" alt="Stream Thumbnail">
+                            <div class="live-badge"><i class="fas fa-circle"></i> LIVE</div>
+                            <div class="viewer-count"><i class="fas fa-eye"></i> 5.4K</div>
+                        </div>
+                        <div class="stream-info">
+                            <h3 class="stream-title">Tech News Weekly - New GPU Launch Discussion</h3>
+                            <div class="streamer-info">
+                                <img src="https://placehold.co/40x40/eb0400/ffffff?text=T" alt="Streamer Avatar" class="streamer-avatar">
+                                <a href="#" class="streamer-name">TechTalk</a>
+                            </div>
+                            <div class="stream-game">Talk Show • Technology</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Upcoming Streams</h2>
+                <div class="stream-grid">
+                    <!-- Scheduled Stream 1 -->
+                    <div class="stream-card" onclick="showPage('stream')">
+                        <div class="stream-thumbnail">
+                            <img src="https://placehold.co/600x340/eab300/000000?text=Coding+Tutorial" alt="Stream Thumbnail">
+                            <div class="live-badge"><i class="fas fa-clock"></i> UPCOMING</div>
+                        </div>
+                        <div class="stream-info">
+                            <h3 class="stream-title">Learn React in 1 Hour - Beginner Tutorial</h3>
+                            <div class="streamer-info">
+                                <img src="https://placehold.co/40x40/eab300/000000?text=D" alt="Streamer Avatar" class="streamer-avatar">
+                                <a href="#" class="streamer-name">DevDoctor</a>
+                            </div>
+                            <div class="stream-game">Software Development • JavaScript</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scheduled Stream 2 -->
+                    <div class="stream-card" onclick="showPage('stream')">
+                        <div class="stream-thumbnail">
+                            <img src="https://placehold.co/600x340/9147ff/ffffff?text=Art+Stream" alt="Stream Thumbnail">
+                            <div class="live-badge"><i class="fas fa-clock"></i> UPCOMING</div>
+                        </div>
+                        <div class="stream-info">
+                            <h3 class="stream-title">Digital Portrait Painting - From Sketch to Finish</h3>
+                            <div class="streamer-info">
+                                <img src="https://placehold.co/40x40/9147ff/ffffff?text=A" alt="Streamer Avatar" class="streamer-avatar">
+                                <a href="#" class="streamer-name">ArtWithAmy</a>
+                            </div>
+                            <div class="stream-game">Art • Digital Painting</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Sign Up Page -->
+    <div id="signup" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2>Create Account</h2>
+                    <p>Join Live Flow to start streaming today</p>
+                </div>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Create a password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password">
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100" onclick="showPage('home')">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" onclick="showPage('login')">Log In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Login Page -->
+    <div id="login" class="page">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2>Welcome Back</h2>
+                    <p>Log in to your Live Flow account</p>
+                </div>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100" onclick="showPage('home')">
+                        <i class="fas fa-sign-in-alt"></i> Log In
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" onclick="showPage('signup')">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Stream Page -->
+    <div id="stream" class="page">
+        <div class="container">
+            <div class="stream-player">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe>
+                </div>
+                
+                <div class="stream-info-panel">
+                    <div class="streamer-details">
+                        <img src="https://placehold.co/50x50/9147ff/ffffff?text=J" alt="Streamer">
+                        <div>
+                            <h3>VALORANT Tournament Finals - Watch Party!</h3>
+                            <p>JesseStreams • 3.2K viewers</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stream-actions">
+                        <button class="btn btn-outline btn-sm"><i class="fas fa-heart"></i> Follow</button>
+                        <button class="btn btn-primary btn-sm"><i class="fas fa-share"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-container">
+                <h3 class="mb-20">Stream Chat</h3>
+                <div class="chat-messages">
+                    <div class="message">
+                        <strong>Viewer123:</strong> Amazing play!
+                    </div>
+                    <div class="message">
+                        <strong>GameFan99:</strong> How did you do that??
+                    </div>
+                    <div class="message">
+                        <strong>StreamLover:</strong> This tournament is so intense!
+                    </div>
+                    <div class="message">
+                        <strong>ProGamer:</strong> What's your setup?
+                    </div>
+                    <div class="message">
+                        <strong>NewViewer:</strong> Just joined, what did I miss?
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" placeholder="Type your message here...">
+                    <button class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Schedules Page -->
+    <div id="schedules" class="page">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Upcoming Stream Schedules</h2>
+            
+            <div class="stream-grid">
+                <!-- Scheduled Stream 1 -->
+                <div class="stream-card" onclick="showPage('stream')">
+                    <div class="stream-thumbnail">
+                        <img src="https://placehold.co/600x340/eab300/000000?text=Coding+Tutorial" alt="Stream Thumbnail">
+                        <div class="live-badge"><i class="fas fa-clock"></i> TOMORROW 3:00 PM</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3 class="stream-title">Learn React in 1 Hour - Beginner Tutorial</h3>
+                        <div class="streamer-info">
+                            <img src="https://placehold.co/40x40/eab300/000000?text=D" alt="Streamer Avatar" class="streamer-avatar">
+                            <a href="#" class="streamer-name">DevDoctor</a>
+                        </div>
+                        <div class="stream-game">Software Development • JavaScript</div>
+                    </div>
+                </div>
+                
+                <!-- Scheduled Stream 2 -->
+                <div class="stream-card" onclick="showPage('stream')">
+                    <div class="stream-thumbnail">
+                        <img src="https://placehold.co/600x340/9147ff/ffffff?text=Art+Stream" alt="Stream Thumbnail">
+                        <div class="live-badge"><i class="fas fa-clock"></i> AUG 25 2:00 PM</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3 class="stream-title">Digital Portrait Painting - From Sketch to Finish</h3>
+                        <div class="streamer-info">
+                            <img src="https://placehold.co/40x40/9147ff/ffffff?text=A" alt="Streamer Avatar" class="streamer-avatar">
+                            <a href="#" class="streamer-name">ArtWithAmy</a>
+                        </div>
+                        <div class="stream-game">Art • Digital Painting</div>
+                    </div>
+                </div>
+                
+                <!-- Scheduled Stream 3 -->
+                <div class="stream-card" onclick="showPage('stream')">
+                    <div class="stream-thumbnail">
+                        <img src="https://placehold.co/600x340/009d84/ffffff?text=Cooking+Stream" alt="Stream Thumbnail">
+                        <div class="live-badge"><i class="fas fa-clock"></i> AUG 28 7:00 PM</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3 class="stream-title">Italian Pasta Night - Cooking Live</h3>
+                        <div class="streamer-info">
+                            <img src="https://placehold.co/40x40/009d84/ffffff?text=C" alt="Streamer Avatar" class="streamer-avatar">
+                            <a href="#" class="streamer-name">ChefCarlos</a>
+                        </div>
+                        <div class="stream-game">Cooking • Italian Cuisine</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Videos Page -->
+    <div id="videos" class="page">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-video"></i> Popular Videos</h2>
+            
+            <div class="stream-grid">
+                <!-- Video 1 -->
+                <div class="stream-card" onclick="showPage('stream')">
+                    <div class="stream-thumbnail">
+                        <img src="https://placehold.co/600x340/9147ff/ffffff?text=Gaming+Highlights" alt="Video Thumbnail">
+                        <div class="viewer-count"><i class="fas fa-play-circle"></i> 45K views</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3 class="stream-title">EPIC Gaming Moments - July Highlights</h3>
+                        <div class="streamer-info">
+                            <img src="https://placehold.co/40x40/9147ff/ffffff?text=J" alt="Streamer Avatar" class="streamer-avatar">
+                            <a href="#" class="streamer-name">JesseStreams</a>
+                        </div>
+                        <div class="stream-game">2 days ago • 15:42</div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="stream-card" onclick="showPage('stream')">
+                    <div class="stream-thumbnail">
+                        <img src="https://placehold.co/600x340/eb0400/ffffff?text=Tech+Review" alt="Video Thumbnail">
+                        <div class="viewer-count"><i class="fas fa-play-circle"></i> 82K views</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3 class="stream-title">New iPhone 15 Review - Worth The Upgrade?</h3>
+                        <div class="streamer-info">
+                            <img src="https://placehold.co/40x40/eb0400/ffffff?text=T" alt="Streamer Avatar" class="streamer-avatar">
+                            <a href="#" class="streamer-name">TechTalk</a>
+                        </div>
+                        <div class="stream-game">1 week ago • 22:18</div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="stream-card" onclick="showPage('stream')">
+                    <div class="stream-thumbnail">
+                        <img src="https://placehold.co/600x340/009d84/ffffff?text=Music+Performance" alt="Video Thumbnail">
+                        <div class="viewer-count"><i class="fas fa-play-circle"></i> 120K views</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3 class="stream-title">Live Concert: Summer Vibes Playlist</h3>
+                        <div class="streamer-info">
+                            <img src="https://placehold.co/40x40/009d84/ffffff?text=M" alt="Streamer Avatar" class="streamer-avatar">
+                            <a href="#" class="streamer-name">MelodyMaker</a>
+                        </div>
+                        <div class="stream-game">3 weeks ago • 1:05:22</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Live Flow</h3>
+                    <p>The ultimate streaming platform for content creators and viewers.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><a href="#">Live Streaming</a></li>
+                        <li><a href="#">Video on Demand</a></li>
+                        <li><a href="#">Unified Chat</a></li>
+                        <li><a href="#">Multi-Platform</a></li>
+                        <li><a href="#">Analytics</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Status</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Partners</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Live Flow. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Function to show specific page and hide others
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the requested page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Initialize some demo functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event to create options
+            const createOptions = document.querySelectorAll('.create-option');
+            createOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    alert('Stream creation wizard would open here!');
+                });
+            });
+            
+            // Simulate chat functionality
+            const chatForm = document.querySelector('.chat-input');
+            if (chatForm) {
+                chatForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const input = this.querySelector('input');
+                    if (input.value.trim() !== '') {
+                        const chatMessages = document.querySelector('.chat-messages');
+                        const newMessage = document.createElement('div');
+                        newMessage.className = 'message';
+                        newMessage.innerHTML = `<strong>You:</strong> ${input.value}`;
+                        chatMessages.appendChild(newMessage);
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        input.value = '';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
