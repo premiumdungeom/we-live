@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Update Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="main.html" class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow Admin</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="admin-updates.html" class="active"><i class="fas fa-newspaper"></i> Manage Updates</a></li>
+                    <li><a href="updates.html"><i class="fas fa-eye"></i> View Updates</a></li>
+                    <li><a href="main.html"><i class="fas fa-home"></i> Back to App</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-profile">
+                <img src="https://placehold.co/40x40/9147ff/ffffff?text=A" alt="Admin" class="user-avatar">
+            </div>
+        </div>
+    </header>
+    
+    <!-- Admin Content -->
+    <div class="container main-content">
+        <div class="admin-header">
+            <h2><i class="fas fa-newspaper"></i> Update Management</h2>
+            <p>Create and manage platform updates and announcements</p>
+        </div>
+        
+        <!-- Create New Update Form -->
+        <div class="auth-card">
+            <h3><i class="fas fa-plus-circle"></i> Create New Update</h3>
+            
+            <div class="form-group">
+                <label for="update-title">Update Title</label>
+                <input type="text" id="update-title" class="form-control" placeholder="Enter update title">
+            </div>
+            
+            <div class="form-group">
+                <label for="update-content">Update Content</label>
+                <textarea id="update-content" class="form-control" placeholder="Enter update content" rows="5"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="update-type">Update Type</label>
+                <select id="update-type" class="form-control">
+                    <option value="news">News</option>
+                    <option value="announcement">Announcement</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="feature">New Feature</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="update-importance">Importance Level</label>
+                <select id="update-importance" class="form-control">
+                    <option value="low">Low</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="high">High</option>
+                    <option value="critical">Critical</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="update-pinned"> Pin this update to top
+                </label>
+            </div>
+            
+            <button type="button" class="btn btn-primary w-100" onclick="createUpdate()">
+                <i class="fas fa-paper-plane"></i> Publish Update
+            </button>
+        </div>
+        
+        <!-- Existing Updates -->
+        <div class="admin-updates-list">
+            <h3><i class="fas fa-history"></i> Existing Updates</h3>
+            
+            <div class="update-item">
+                <div class="update-header">
+                    <h4>New Monetization Features</h4>
+                    <span class="update-badge update-badge-feature">Feature</span>
+                    <span class="update-badge update-badge-high">High Importance</span>
+                    <span class="update-badge update-badge-pinned">Pinned</span>
+                </div>
+                <div class="update-content">
+                    <p>We've launched new ways for creators to earn money on Live Flow including premium subscriptions, virtual gifts, ad revenue sharing, and brand partnership marketplace.</p>
+                </div>
+                <div class="update-meta">
+                    <span><i class="fas fa-calendar"></i> Posted 2 days ago</span>
+                    <span><i class="fas fa-eye"></i> 1,245 views</span>
+                    <div class="update-actions">
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-trash"></i> Delete</button>
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-times"></i> Unpin</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="update-item">
+                <div class="update-header">
+                    <h4>Live Flow Mobile App Update</h4>
+                    <span class="update-badge update-badge-news">News</span>
+                    <span class="update-badge update-badge-normal">Normal</span>
+                </div>
+                <div class="update-content">
+                    <p>Our latest app update includes improved streaming quality, enhanced chat moderation tools, dark mode scheduling, and better notification system.</p>
+                </div>
+                <div class="update-meta">
+                    <span><i class="fas fa-calendar"></i> Posted 1 week ago</span>
+                    <span><i class="fas fa-eye"></i> 892 views</span>
+                    <div class="update-actions">
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-trash"></i> Delete</button>
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-thumbtack"></i> Pin</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="update-item">
+                <div class="update-header">
+                    <h4>Scheduled Maintenance Notice</h4>
+                    <span class="update-badge update-badge-maintenance">Maintenance</span>
+                    <span class="update-badge update-badge-critical">Critical</span>
+                </div>
+                <div class="update-content">
+                    <p>We'll be performing system maintenance on August 30th from 2:00 AM to 4:00 AM EST. During this time, Live Flow will be unavailable. We apologize for any inconvenience.</p>
+                </div>
+                <div class="update-meta">
+                    <span><i class="fas fa-calendar"></i> Posted 3 days ago</span>
+                    <span><i class="fas fa-eye"></i> 1,897 views</span>
+                    <div class="update-actions">
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-trash"></i> Delete</button>
+                        <button class="btn btn-sm btn-outline"><i class="fas fa-thumbtack"></i> Pin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

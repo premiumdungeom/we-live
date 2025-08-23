@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover - Live Flow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/discover.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="main.html" class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="discover.html" class="active"><i class="fas fa-compass"></i> Discover</a></li>
+                    <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
+                    <li><a href="#"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-profile">
+                <img src="https://placehold.co/40x40/9147ff/ffffff?text=U" alt="User" class="user-avatar" id="headerAvatar">
+            </div>
+        </div>
+    </header>
+    
+    <!-- Discover Content -->
+    <div class="container">
+        <div class="discover-header">
+            <h1><i class="fas fa-compass"></i> Discover Content</h1>
+            <p>Find streams, tutorials, and creators you'll love</p>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search for gameplay, tutorials, editing classes...">
+                    <button class="btn btn-primary" onclick="performSearch()">Search</button>
+                </div>
+            </div>
+            
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <h2>Browse by Category</h2>
+                <div class="categories">
+                    <button class="category-btn active" data-category="all">
+                        <i class="fas fa-globe"></i> All Content
+                    </button>
+                    <button class="category-btn" data-category="gaming">
+                        <i class="fas fa-gamepad"></i> Gaming
+                    </button>
+                    <button class="category-btn" data-category="tutorials">
+                        <i class="fas fa-chalkboard-teacher"></i> Tutorials
+                    </button>
+                    <button class="category-btn" data-category="creative">
+                        <i class="fas fa-paint-brush"></i> Creative
+                    </button>
+                    <button class="category-btn" data-category="music">
+                        <i class="fas fa-music"></i> Music
+                    </button>
+                    <button class="category-btn" data-category="talk">
+                        <i class="fas fa-microphone"></i> Talk Shows
+                    </button>
+                    <button class="category-btn" data-category="education">
+                        <i class="fas fa-graduation-cap"></i> Education
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Live Streams Section -->
+        <div class="content-section">
+            <h2><i class="fas fa-broadcast-tower"></i> Live Now</h2>
+            <div class="stream-grid" id="liveStreams">
+                <!-- Live streams will be loaded here -->
+            </div>
+        </div>
+        
+        <!-- Popular Content Section -->
+        <div class="content-section">
+            <h2><i class="fas fa-fire"></i> Popular Content</h2>
+            <div class="stream-grid" id="popularContent">
+                <!-- Popular content will be loaded here -->
+            </div>
+        </div>
+        
+        <!-- Recommended For You Section -->
+        <div class="content-section">
+            <h2><i class="fas fa-star"></i> Recommended For You</h2>
+            <div class="stream-grid" id="recommendedContent">
+                <!-- Recommended content will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="main.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="discover.html" class="nav-item active">
+            <i class="fas fa-search"></i>
+            <span>Discover</span>
+        </a>
+        <a href="updates.html" class="nav-item">
+            <i class="fas fa-newspaper"></i>
+            <span>Updates</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-broadcast-tower"></i>
+            <span>Live</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/discover.js"></script>
+</body>
+</html>

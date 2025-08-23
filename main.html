@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Flow - Main Feed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="main.html" class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+                    <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
+                    <li><a href="#"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-profile" onclick="window.location.href='profile.html'">
+                <img src="https://placehold.co/40x40/9147ff/ffffff?text=U" alt="User" class="user-avatar">
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Feed Content -->
+    <div class="container">
+        <div class="feed-container">
+            <!-- Video Card 1 -->
+            <div class="video-card">
+                <div class="video-player">
+                    <iframe src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-creator">
+                        <img src="https://placehold.co/40x40/9147ff/ffffff?text=J" alt="Creator" class="creator-avatar">
+                        <div class="creator-info">
+                            <a href="#" class="creator-name">JesseStreams</a>
+                            <div class="creator-followers">245K followers</div>
+                        </div>
+                        <button class="btn btn-sm btn-primary">Follow</button>
+                    </div>
+                    <p>VALORANT Tournament Finals - Watch Party! Don't miss this epic gameplay!</p>
+                    <div class="video-stats">
+                        <div class="stat">
+                            <i class="fas fa-heart"></i>
+                            <span class="stat-count">2.4K</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-comment"></i>
+                            <span class="stat-count">548</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-share"></i>
+                            <span class="stat-count">127</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span class="stat-count">64</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video Card 2 -->
+            <div class="video-card">
+                <div class="video-player">
+                    <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-creator">
+                        <img src="https://placehold.co/40x40/009d84/ffffff?text=M" alt="Creator" class="creator-avatar">
+                        <div class="creator-info">
+                            <a href="#" class="creator-name">MelodyMaker</a>
+                            <div class="creator-followers">189K followers</div>
+                        </div>
+                        <button class="btn btn-sm btn-primary">Follow</button>
+                    </div>
+                    <p>Chill Lofi Beats for Coding/Studying 🎵 Perfect focus music for your workflow</p>
+                    <div class="video-stats">
+                        <div class="stat">
+                            <i class="fas fa-heart"></i>
+                            <span class="stat-count">3.7K</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-comment"></i>
+                            <span class="stat-count">892</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-share"></i>
+                            <span class="stat-count">305</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span class="stat-count">142</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="main.html" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="discover.html" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Discover</span>
+        </a>
+        <a href="updates.html" class="nav-item">
+            <i class="fas fa-newspaper"></i>
+            <span>Updates</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-broadcast-tower"></i>
+            <span>Live</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

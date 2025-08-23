@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Flow - Streaming Platform</title>
+    <title>Login - Live Flow</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <!-- Welcome Animation -->
-    <div class="welcome-container" id="welcomeAnimation">
-        <div class="animation-container">
-            <div class="ball"></div>
-            <div class="welcome-text">Welcome to Live Flow</div>
-        </div>
-    </div>
-
     <!-- Header -->
     <header>
         <div class="container header-content">
@@ -25,11 +17,7 @@
             </a>
             
             <nav>
-                <ul>
-                    <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
-                    <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
-                    <li><a href="#"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
-                </ul>
+               
             </nav>
             
             <div class="user-actions">
@@ -39,22 +27,33 @@
         </div>
     </header>
     
-    <!-- Main Content -->
+    <!-- Login Content -->
     <div class="container main-content">
         <div class="auth-container">
             <div class="auth-card">
                 <div class="auth-header">
-                    <h2>Welcome to Live Flow</h2>
-                    <p>The ultimate streaming platform for content creators</p>
+                    <h2>Welcome Back</h2>
+                    <p>Log in to your Live Flow account</p>
                 </div>
                 
-                <div class="text-center mt-20">
-                    <a href="signup.html" class="btn btn-primary w-100 mb-20">
-                        <i class="fas fa-user-plus"></i> Create Account
-                    </a>
-                    <a href="login.html" class="btn btn-outline w-100">
+                <form>
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary w-100" onclick="login()">
                         <i class="fas fa-sign-in-alt"></i> Log In
-                    </a>
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
                 </div>
             </div>
         </div>

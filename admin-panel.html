@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Live Flow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .admin-panel {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        .admin-tab {
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .admin-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .thumbnail-preview {
+            width: 100%;
+            height: 200px;
+            background-color: var(--dark);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .thumbnail-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        
+        .content-list {
+            margin-top: 30px;
+        }
+        
+        .content-item {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .content-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .content-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-draft {
+            background-color: var(--warning);
+            color: black;
+        }
+        
+        .status-published {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .content-actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="main.html" class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+                    <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
+                    <li><a href="#"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-profile">
+                <img src="https://placehold.co/40x40/9147ff/ffffff?text=U" alt="User" class="user-avatar" id="headerAvatar">
+            </div>
+        </div>
+    </header>
+    
+    <!-- Admin Panel -->
+    <div class="container admin-panel">
+        <div class="admin-header">
+            <h1><i class="fas fa-cogs"></i> Admin Panel</h1>
+            <p>Manage your website content</p>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="create">Create Content</button>
+            <button class="admin-tab" data-tab="manage">Manage Content</button>
+            <button class="admin-tab" data-tab="analytics">Analytics</button>
+        </div>
+        
+        <!-- Create Content Tab -->
+        <div class="tab-content active" id="createTab">
+            <div class="auth-card">
+                <h2>Create New Content</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contentTitle">Title</label>
+                        <input type="text" id="contentTitle" class="form-control" placeholder="Enter content title">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contentCategory">Category</label>
+                        <select id="contentCategory" class="form-control">
+                            <option value="">Select Category</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="tutorials">Tutorials</option>
+                            <option value="creative">Creative</option>
+                            <option value="music">Music</option>
+                            <option value="talk">Talk Shows</option>
+                            <option value="education">Education</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentDescription">Description</label>
+                    <textarea id="contentDescription" class="form-control" placeholder="Enter content description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentThumbnail">Thumbnail Image</label>
+                    <input type="file" id="contentThumbnail" accept="image/*" class="form-control">
+                    <div class="thumbnail-preview">
+                        <span>Thumbnail preview will appear here</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentType">Content Type</label>
+                    <select id="contentType" class="form-control">
+                        <option value="stream">Live Stream</option>
+                        <option value="video">Recorded Video</option>
+                        <option value="article">Article/Blog Post</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contentStatus">Status</label>
+                    <select id="contentStatus" class="form-control">
+                        <option value="draft">Draft</option>
+                        <option value="published">Publish Immediately</option>
+                        <option value="scheduled">Schedule for Later</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="scheduleDateGroup" style="display: none;">
+                    <label for="contentScheduleDate">Schedule Date & Time</label>
+                    <input type="datetime-local" id="contentScheduleDate" class="form-control">
+                </div>
+                
+                <button type="button" class="btn btn-primary w-100" onclick="saveContent()">
+                    <i class="fas fa-save"></i> Save Content
+                </button>
+            </div>
+        </div>
+        
+        <!-- Manage Content Tab -->
+        <div class="tab-content" id="manageTab">
+            <h2>Manage Your Content</h2>
+            
+            <div class="content-filters">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="filterCategory">Filter by Category</label>
+                        <select id="filterCategory" class="form-control">
+                            <option value="">All Categories</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="tutorials">Tutorials</option>
+                            <option value="creative">Creative</option>
+                            <option value="music">Music</option>
+                            <option value="talk">Talk Shows</option>
+                            <option value="education">Education</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="filterStatus">Filter by Status</label>
+                        <select id="filterStatus" class="form-control">
+                            <option value="">All Statuses</option>
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                            <option value="scheduled">Scheduled</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-list" id="contentList">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+        
+        <!-- Analytics Tab -->
+        <div class="tab-content" id="analyticsTab">
+            <h2>Content Analytics</h2>
+            <p>View performance metrics for your content</p>
+            
+            <div class="auth-card">
+                <h3><i class="fas fa-chart-line"></i> Performance Overview</h3>
+                
+                <div class="form-row">
+                    <div class="stat-card">
+                        <div class="stat-number">24.5K</div>
+                        <div class="stat-label">Total Views</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">1.2K</div>
+                        <div class="stat-label">Total Likes</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">245</div>
+                        <div class="stat-label">Total Comments</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">42</div>
+                        <div class="stat-label">Total Content</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auth-card">
+                <h3><i class="fas fa-fire"></i> Top Performing Content</h3>
+                
+                <div class="content-list">
+                    <div class="content-item">
+                        <div class="content-item-header">
+                            <h4>VALORANT Tournament Finals</h4>
+                            <span class="content-status status-published">Published</span>
+                        </div>
+                        <p>Gaming • 3.2K views • 245 likes • 42 comments</p>
+                    </div>
+                    
+                    <div class="content-item">
+                        <div class="content-item-header">
+                            <h4>Photoshop Editing Masterclass</h4>
+                            <span class="content-status status-published">Published</span>
+                        </div>
+                        <p>Tutorials • 1.5K views • 178 likes • 35 comments</p>
+                    </div>
+                    
+                    <div class="content-item">
+                        <div class="content-item-header">
+                            <h4>Chill Lofi Music Stream</h4>
+                            <span class="content-status status-published">Published</span>
+                        </div>
+                        <p>Music • 4.2K views • 320 likes • 28 comments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/admin-panel.js"></script>
+</body>
+</html>

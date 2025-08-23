@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Flow - Streaming Platform</title>
+    <title>Verify Email - Live Flow</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <!-- Welcome Animation -->
-    <div class="welcome-container" id="welcomeAnimation">
-        <div class="animation-container">
-            <div class="ball"></div>
-            <div class="welcome-text">Welcome to Live Flow</div>
-        </div>
-    </div>
-
     <!-- Header -->
     <header>
         <div class="container header-content">
@@ -39,22 +31,30 @@
         </div>
     </header>
     
-    <!-- Main Content -->
+    <!-- Verification Content -->
     <div class="container main-content">
         <div class="auth-container">
             <div class="auth-card">
                 <div class="auth-header">
-                    <h2>Welcome to Live Flow</h2>
-                    <p>The ultimate streaming platform for content creators</p>
+                    <h2>Verify Your Email</h2>
+                    <p>We've sent a verification code to your email</p>
                 </div>
                 
-                <div class="text-center mt-20">
-                    <a href="signup.html" class="btn btn-primary w-100 mb-20">
-                        <i class="fas fa-user-plus"></i> Create Account
-                    </a>
-                    <a href="login.html" class="btn btn-outline w-100">
-                        <i class="fas fa-sign-in-alt"></i> Log In
-                    </a>
+                <div class="verification-inputs">
+                    <input type="text" class="verification-input" maxlength="1" onkeyup="moveToNext(this, 1)">
+                    <input type="text" class="verification-input" maxlength="1" onkeyup="moveToNext(this, 2)">
+                    <input type="text" class="verification-input" maxlength="1" onkeyup="moveToNext(this, 3)">
+                    <input type="text" class="verification-input" maxlength="1" onkeyup="moveToNext(this, 4)">
+                    <input type="text" class="verification-input" maxlength="1" onkeyup="moveToNext(this, 5)">
+                    <input type="text" class="verification-input" maxlength="1" onkeyup="moveToNext(this, 6)">
+                </div>
+                
+                <button type="button" class="btn btn-primary w-100" onclick="window.location.href='profile-setup.html'">
+                    <i class="fas fa-check-circle"></i> Verify & Continue
+                </button>
+                
+                <div class="auth-footer">
+                    <p>Didn't receive the code? <a href="#">Resend</a></p>
                 </div>
             </div>
         </div>

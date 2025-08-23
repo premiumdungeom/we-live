@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup - Live Flow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+                    <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
+                    <li><a href="#"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <a href="login.html" class="btn btn-outline">Log In</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Profile Setup Content -->
+    <div class="container main-content">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2>Complete Your Profile</h2>
+                    <p>Customize your presence on Live Flow</p>
+                </div>
+                
+                <div class="avatar-upload">
+                    <img src="https://placehold.co/120x120/9147ff/ffffff?text=U" alt="Avatar" class="avatar-preview" id="avatarPreview">
+                    <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                    <button class="btn btn-outline" onclick="document.getElementById('avatarInput').click()">
+                        <i class="fas fa-camera"></i> Upload Photo
+                    </button>
+                    <div class="upload-error" id="uploadError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="displayName">Display Name</label>
+                    <input type="text" id="displayName" class="form-control" placeholder="How should we call you?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" class="form-control" placeholder="Tell everyone about yourself" rows="3"></textarea>
+                </div>
+                
+                <div class="social-connections">
+                    <h3 class="mb-20">Connect Social Accounts</h3>
+                    
+                    <div class="social-connection">
+                        <div class="social-icon" style="color: #1877F2;">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="social-name">Facebook</div>
+                        <button class="btn btn-sm btn-outline">Connect</button>
+                    </div>
+                    
+                    <div class="social-connection">
+                        <div class="social-icon" style="color: #1DA1F2;">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="social-name">Twitter</div>
+                        <button class="btn btn-sm btn-outline">Connect</button>
+                    </div>
+                    
+                    <div class="social-connection">
+                        <div class="social-icon" style="color: #E1306C;">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="social-name">Instagram</div>
+                        <button class="btn btn-sm btn-outline">Connect</button>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-primary w-100 mt-20" onclick="completeSignup()">
+                    <i class="fas fa-check"></i> Complete Setup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>

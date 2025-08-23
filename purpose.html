@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Flow - Streaming Platform</title>
+    <title>Choose Purpose - Live Flow</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <!-- Welcome Animation -->
-    <div class="welcome-container" id="welcomeAnimation">
-        <div class="animation-container">
-            <div class="ball"></div>
-            <div class="welcome-text">Welcome to Live Flow</div>
-        </div>
-    </div>
-
     <!-- Header -->
     <header>
         <div class="container header-content">
@@ -39,22 +31,39 @@
         </div>
     </header>
     
-    <!-- Main Content -->
+    <!-- Purpose Selection Content -->
     <div class="container main-content">
         <div class="auth-container">
             <div class="auth-card">
                 <div class="auth-header">
-                    <h2>Welcome to Live Flow</h2>
-                    <p>The ultimate streaming platform for content creators</p>
+                    <h2>How will you use Live Flow?</h2>
+                    <p>Select what best describes your streaming goals</p>
                 </div>
                 
-                <div class="text-center mt-20">
-                    <a href="signup.html" class="btn btn-primary w-100 mb-20">
-                        <i class="fas fa-user-plus"></i> Create Account
-                    </a>
-                    <a href="login.html" class="btn btn-outline w-100">
-                        <i class="fas fa-sign-in-alt"></i> Log In
-                    </a>
+                <div class="purpose-grid">
+                    <div class="purpose-card" onclick="window.location.href='verification.html'">
+                        <i class="fas fa-gamepad"></i>
+                        <h3>Gaming</h3>
+                        <p>Stream your gameplay and connect with other gamers</p>
+                    </div>
+                    
+                    <div class="purpose-card" onclick="window.location.href='verification.html'">
+                        <i class="fas fa-music"></i>
+                        <h3>Music & Arts</h3>
+                        <p>Share your creative process and performances</p>
+                    </div>
+                    
+                    <div class="purpose-card" onclick="window.location.href='verification.html'">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>Education</h3>
+                        <p>Teach and share knowledge with your audience</p>
+                    </div>
+                    
+                    <div class="purpose-card" onclick="window.location.href='verification.html'">
+                        <i class="fas fa-microphone"></i>
+                        <h3>Talk Show</h3>
+                        <p>Host discussions and interviews</p>
+                    </div>
                 </div>
             </div>
         </div>

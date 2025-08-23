@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - Live Flow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="main.html" class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow</span>
+            </a>
+            
+            <nav>
+                <ul>
+                    <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+                    <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
+                    <li><a href="#"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-profile" id="userProfile">
+                <img src="https://placehold.co/40x40/9147ff/ffffff?text=U" alt="User" class="user-avatar" id="headerAvatar">
+            </div>
+        </div>
+    </header>
+    
+    <!-- Profile Content -->
+    <div class="container main-content">
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar-container">
+                    <img src="https://placehold.co/150x150/9147ff/ffffff?text=U" alt="Profile" class="profile-avatar" id="profileAvatar">
+                    <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                    <button class="btn btn-outline avatar-edit-btn" onclick="document.getElementById('avatarInput').click()">
+                        <i class="fas fa-camera"></i> Change Photo
+                    </button>
+                    <div class="upload-error" id="uploadError"></div>
+                </div>
+                
+                <div class="profile-info">
+                    <h1 id="profileDisplayName">Username</h1>
+                    <p class="profile-username" id="profileUsername">@username</p>
+                    <p class="profile-bio" id="profileBio">This is where your bio will appear. Tell everyone about yourself!</p>
+                    <p class="profile-join-date"><i class="fas fa-calendar-plus"></i> Joined June 2023</p>
+                    
+                    <div class="profile-actions">
+                        <button class="btn btn-primary" onclick="editProfile()">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-share-alt"></i> Share Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Stats -->
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number">245</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">178</div>
+                    <div class="stat-label">Following</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Streams</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1.2K</div>
+                    <div class="stat-label">Likes</div>
+                </div>
+            </div>
+            
+            <!-- Profile Navigation -->
+            <div class="profile-nav">
+                <button class="profile-nav-item active" data-tab="streams">
+                    <i class="fas fa-video"></i> Streams
+                </button>
+                <button class="profile-nav-item" data-tab="clips">
+                    <i class="fas fa-film"></i> Clips
+                </button>
+                <button class="profile-nav-item" data-tab="about">
+                    <i class="fas fa-user"></i> About
+                </button>
+                <button class="profile-nav-item" data-tab="stats">
+                    <i class="fas fa-chart-line"></i> Stats
+                </button>
+            </div>
+            
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <!-- Streams Tab -->
+                <div class="profile-tab-content active" id="streamsTab">
+                    <h2>Your Streams</h2>
+                    
+                    <div class="stream-grid">
+                        <!-- Stream Card 1 -->
+                        <div class="stream-card">
+                            <div class="stream-thumbnail">
+                                <img src="https://placehold.co/600x340/9147ff/ffffff?text=Gaming+Stream" alt="Stream Thumbnail">
+                                <div class="video-duration">2:15:36</div>
+                            </div>
+                            <div class="stream-info">
+                                <h3 class="stream-title">VALORANT Tournament Finals - Watch Party!</h3>
+                                <div class="stream-meta">
+                                    <span><i class="fas fa-eye"></i> 3.2K views</span>
+                                    <span><i class="fas fa-calendar"></i> 2 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stream Card 2 -->
+                        <div class="stream-card">
+                            <div class="stream-thumbnail">
+                                <img src="https://placehold.co/600x340/009d84/ffffff?text=Just+Chatting" alt="Stream Thumbnail">
+                                <div class="video-duration">1:45:22</div>
+                            </div>
+                            <div class="stream-info">
+                                <h3 class="stream-title">Q&A Session with Viewers</h3>
+                                <div class="stream-meta">
+                                    <span><i class="fas fa-eye"></i> 1.8K views</span>
+                                    <span><i class="fas fa-calendar"></i> 1 week ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stream Card 3 -->
+                        <div class="stream-card">
+                            <div class="stream-thumbnail">
+                                <img src="https://placehold.co/600x340/eb0400/ffffff?text=Music+Stream" alt="Stream Thumbnail">
+                                <div class="video-duration">3:02:15</div>
+                            </div>
+                            <div class="stream-info">
+                                <h3 class="stream-title">Chill Lofi Beats for Coding/Studying</h3>
+                                <div class="stream-meta">
+                                    <span><i class="fas fa-eye"></i> 5.4K views</span>
+                                    <span><i class="fas fa-calendar"></i> 2 weeks ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Clips Tab -->
+                <div class="profile-tab-content" id="clipsTab">
+                    <h2>Your Clips</h2>
+                    <p class="empty-state">You haven't created any clips yet. Start clipping your best moments from streams!</p>
+                </div>
+                
+                <!-- About Tab -->
+                <div class="profile-tab-content" id="aboutTab">
+                    <h2>About You</h2>
+                    
+                    <div class="about-section">
+                        <h3><i class="fas fa-info-circle"></i> Bio</h3>
+                        <p id="aboutBio">This is where your bio will appear. Tell everyone about yourself, your interests, and what kind of content you create!</p>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h3><i class="fas fa-link"></i> Links</h3>
+                        <div class="profile-links">
+                            <a href="#" class="profile-link">
+                                <i class="fab fa-twitch"></i> Twitch.tv/yourchannel
+                            </a>
+                            <a href="#" class="profile-link">
+                                <i class="fab fa-youtube"></i> YouTube.com/yourchannel
+                            </a>
+                            <a href="#" class="profile-link">
+                                <i class="fab fa-twitter"></i> Twitter.com/yourusername
+                            </a>
+                        </div>
+                        <button class="btn btn-outline btn-sm">
+                            <i class="fas fa-plus"></i> Add Link
+                        </button>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                        <div class="achievements">
+                            <div class="achievement">
+                                <i class="fas fa-star"></i>
+                                <span>First Stream</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-users"></i>
+                                <span>100 Followers</span>
+                            </div>
+                            <div class="achievement">
+                                <i class="fas fa-video"></i>
+                                <span>10 Streams</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Tab -->
+                <div class="profile-tab-content" id="statsTab">
+                    <h2>Your Statistics</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number">24.5K</div>
+                                <div class="stat-label">Total Views</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number">127</div>
+                                <div class="stat-label">Hours Streamed</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number">1.2K</div>
+                                <div class="stat-label">Total Likes</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-number">548</div>
+                                <div class="stat-label">Total Comments</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>Viewership Over Time</h3>
+                        <div class="chart-placeholder">
+                            <p>Chart would display here showing your viewership statistics over time</p>
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 30%"></div>
+                                <div class="chart-bar" style="height: 45%"></div>
+                                <div class="chart-bar" style="height: 60%"></div>
+                                <div class="chart-bar" style="height: 80%"></div>
+                                <div class="chart-bar" style="height: 65%"></div>
+                                <div class="chart-bar" style="height: 40%"></div>
+                                <div class="chart-bar" style="height: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <a href="main.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="discover.html" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Discover</span>
+        </a>
+        <a href="updates.html" class="nav-item">
+            <i class="fas fa-newspaper"></i>
+            <span>Updates</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-broadcast-tower"></i>
+            <span>Live</span>
+        </a>
+        <a href="profile.html" class="nav-item active">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editDisplayName">Display Name</label>
+                    <input type="text" id="editDisplayName" class="form-control" placeholder="Enter your display name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" class="form-control" placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editBio">Bio</label>
+                    <textarea id="editBio" class="form-control" placeholder="Tell everyone about yourself" rows="4"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Social Links</label>
+                    <div class="social-input-group">
+                        <i class="fab fa-twitch"></i>
+                        <input type="text" class="form-control" placeholder="Twitch URL">
+                    </div>
+                    <div class="social-input-group">
+                        <i class="fab fa-youtube"></i>
+                        <input type="text" class="form-control" placeholder YouTube URL">
+                    </div>
+                    <div class="social-input-group">
+                        <i class="fab fa-twitter"></i>
+                        <input type="text" class="form-control" placeholder="Twitter URL">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>
