@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Live Flow</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #9147ff;
+            --primary-dark: #772ce8;
+            --secondary: #efeff1;
+            --dark: #0e0e10;
+            --dark-light: #18181b;
+            --gray: #1f1f23;
+            --light-gray: #bf94ff;
+            --text: #efeff1;
+            --text-muted: #adadb8;
+            --success: #00d084;
+            --warning: #eab300;
+            --danger: #eb0400;
+            --card-bg: #18181b;
+            --card-border: #3a3a3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark-light);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        /* Mobile menu button - Always visible */
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+            margin-left: auto;
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-menu-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul {
+            display: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--dark-light);
+            z-index: 1000;
+            padding: 80px 20px 20px;
+            transition: right 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+        }
+
+        .mobile-nav.open {
+            right: 0;
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-nav-close:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            margin-top: 20px;
+            display: block;
+        }
+
+        .mobile-nav ul li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav ul li a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-nav ul li a:hover,
+        .mobile-nav ul li a.active {
+            background-color: var(--dark);
+            color: var(--primary);
+        }
+
+        .mobile-nav ul li a i {
+            margin-right: 10px;
+            width: 24px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.open {
+            display: block;
+        }
+
+        /* Desktop Navigation (for larger screens) */
+        @media (min-width: 1024px) {
+            nav ul {
+                display: flex;
+                list-style: none;
+                margin-left: auto;
+            }
+            
+            nav ul li {
+                margin: 0 15px;
+            }
+            
+            nav ul li a {
+                color: var(--text);
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+            }
+            
+            nav ul li a i {
+                margin-right: 8px;
+            }
+            
+            nav ul li a:hover,
+            nav ul li a.active {
+                color: var(--primary);
+            }
+            
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 30px;
+            flex: 1;
+            padding-bottom: 80px;
+        }
+
+        .settings-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .settings-header {
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        .settings-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .settings-header h1 i {
+            margin-right: 10px;
+        }
+
+        .settings-header p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .settings-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .settings-sidebar {
+            width: 100%;
+        }
+
+        .settings-nav {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .settings-nav::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        .settings-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-right: 1px solid var(--card-border);
+            white-space: nowrap;
+            min-width: max-content;
+        }
+
+        .settings-nav-item:last-child {
+            border-right: none;
+        }
+
+        .settings-nav-item:hover {
+            background-color: var(--dark);
+        }
+
+        .settings-nav-item.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .settings-nav-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .settings-main {
+            width: 100%;
+        }
+
+        .settings-section {
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .settings-section h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .settings-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--card-border);
+        }
+
+        .settings-card h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .settings-card h3 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--dark);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        small {
+            display: block;
+            margin-top: 5px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        .form-check-label {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        /* Password Strength */
+        .password-strength {
+            margin-top: 10px;
+        }
+
+        .strength-bar {
+            height: 5px;
+            background-color: var(--dark);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Danger Zone */
+        .danger-zone {
+            border-color: var(--danger);
+        }
+
+        .danger-zone h3 {
+            color: var(--danger);
+        }
+
+        .danger-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-direction: column;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--text);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c90300;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        /* Sessions List */
+        .sessions-list {
+            margin: 20px 0;
+        }
+
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--dark);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .session-info {
+            flex: 1;
+            width: 100%;
+        }
+
+        .session-device {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .session-device i {
+            margin-right: 10px;
+            width: 16px;
+        }
+
+        .session-details {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Theme Options */
+        .theme-options {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .theme-option {
+            position: relative;
+            cursor: pointer;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+        }
+
+        .theme-option.active .theme-preview {
+            border-color: var(--primary);
+        }
+
+        .theme-option.active i {
+            display: block;
+        }
+
+        .theme-option i {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--primary);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            display: none;
+        }
+
+        .theme-header {
+            height: 15px;
+            background-color: #333;
+        }
+
+        .theme-content {
+            padding: 10px;
+            height: 65px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .theme-item {
+            height: 5px;
+            border-radius: 2px;
+        }
+
+        .dark-theme {
+            background-color: #1a1a1a;
+        }
+
+        .dark-theme .theme-header {
+            background-color: #252525;
+        }
+
+        .dark-theme .theme-item {
+            background-color: #333;
+        }
+
+        .light-theme {
+            background-color: #f5f5f5;
+        }
+
+        .light-theme .theme-header {
+            background-color: #e0e0e0;
+        }
+
+        .light-theme .theme-item {
+            background-color: #e0e0e0;
+        }
+
+        .auto-theme {
+            background: linear-gradient(90deg, #1a1a1a 50%, #f5f5f5 50%);
+        }
+
+        .auto-theme .theme-header {
+            background: linear-gradient(90deg, #252525 50%, #e0e0e0 50%);
+        }
+
+        .auto-theme .theme-item {
+            background: linear-gradient(90deg, #333 50%, #e0e0e0 50%);
+        }
+
+        /* Stream Key Input */
+        .input-with-action {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-with-action .form-control {
+            flex: 1;
+        }
+
+        /* Range Input */
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            background: var(--dark);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Help Links */
+        .help-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .help-link {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--card-border);
+            transition: background-color 0.3s;
+        }
+
+        .help-link:last-child {
+            border-bottom: none;
+        }
+
+        .help-link:hover {
+            background-color: var(--dark);
+            color: var(--primary);
+        }
+
+        .help-link i:first-child {
+            margin-right: 15px;
+            font-size: 20px;
+            width: 24px;
+            color: var(--primary);
+        }
+
+        .help-link span {
+            flex: 1;
+        }
+
+        .help-link i:last-child {
+            color: var(--text-muted);
+        }
+
+        /* About Info */
+        .about-info {
+            margin-bottom: 20px;
+            background-color: var(--dark);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .about-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--card-border);
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .about-item:last-child {
+            border-bottom: none;
+        }
+
+        .about-item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .about-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Delete Warning */
+        .delete-warning {
+            text-align: center;
+        }
+
+        .delete-warning i {
+            font-size: 48px;
+            color: var(--danger);
+            margin-bottom: 15px;
+        }
+
+        .delete-warning h3 {
+            margin-bottom: 15px;
+            color: var(--danger);
+        }
+
+        .delete-warning p {
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--dark-light);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--card-border);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background-color: rgba(145, 71, 255, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item span {
+            font-size: 12px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--card-border);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--text);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        .modal-close:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark-light);
+            color: var(--text);
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .toast i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Mobile menu button styling */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .mobile-menu-btn span {
+            width: 24px;
+            height: 3px;
+            background-color: var(--text);
+            margin: 2px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .mobile-menu-btn.open span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        
+        /* Desktop Styles */
+        @media (min-width: 768px) {
+            .settings-content {
+                flex-direction: row;
+            }
+            
+            .settings-sidebar {
+                flex: 0 0 250px;
+            }
+            
+            .settings-nav {
+                display: block;
+                overflow-x: visible;
+            }
+            
+            .settings-nav-item {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--card-border);
+                justify-content: flex-start;
+            }
+            
+            .settings-nav-item:last-child {
+                border-bottom: none;
+            }
+            
+            .danger-actions {
+                flex-direction: row;
+            }
+            
+            .input-with-action {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .session-item {
+                flex-direction: row;
+            }
+            
+            .session-details {
+                flex-direction: row;
+                gap: 15px;
+            }
+            
+            .about-item {
+                flex-direction: row;
+            }
+            
+            .modal-footer {
+                flex-direction: row;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            nav ul {
+                display: flex;
+                list-style: none;
+                margin-left: auto;
+            }
+            
+            nav ul li {
+                margin: 0 15px;
+            }
+            
+            nav ul li a {
+                color: var(--text);
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+            }
+            
+            nav ul li a i {
+                margin-right: 8px;
+            }
+            
+            nav ul li a:hover,
+            nav ul li a.active {
+                color: var(--primary);
+            }
+            
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        /* Improved touch targets for mobile */
+        @media (max-width: 1023px) {
+            .form-check {
+                align-items: center;
+                padding: 10px 0;
+            }
+            
+            .form-check-input {
+                width: 20px;
+                height: 20px;
+            }
+            
+            .help-link {
+                padding: 15px 12px;
+            }
+            
+            .settings-nav-item {
+                padding: 15px 20px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .settings-header {
+                padding: 15px 0;
+            }
+            
+            .settings-header h1 {
+                font-size: 24px;
+            }
+            
+            .settings-header p {
+                font-size: 16px;
+            }
+            
+            .settings-section h2 {
+                font-size: 20px;
+            }
+            
+            .settings-card h3 {
+                font-size: 16px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .danger-actions {
+                gap: 10px;
+            }
+            
+            .theme-option {
+                min-width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .bottom-nav {
+                padding: 10px 0;
+            }
+            
+            .nav-item {
+                padding: 5px;
+            }
+            
+            .nav-item i {
+                font-size: 18px;
+            }
+            
+            .nav-item span {
+                font-size: 10px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+            
+            .help-link {
+                padding: 12px;
+            }
+            
+            .help-link i:first-child {
+                margin-right: 12px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-nav-item {
+                min-width: 140px;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .settings-nav-item i {
+                margin-right: 6px;
+                font-size: 14px;
+            }
+            
+            .form-control {
+                padding: 10px 12px;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            .btn {
+                padding: 12px 20px;
+            }
+            
+            .theme-preview {
+                height: 70px;
+            }
+            
+            .theme-content {
+                height: 55px;
+            }
+            
+            .modal-header, .modal-body, .modal-footer {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="main.html" class="logo">
+                <i class="fas fa-satellite-dish"></i>
+                <span>Live Flow</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+                    <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
+                    <li><a href="go-live.html"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
+                    <li><a href="subscription.html"><i class="fas fa-crown"></i> Subscription</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="discover.html"><i class="fas fa-compass"></i> Discover</a></li>
+            <li><a href="updates.html"><i class="fas fa-newspaper"></i> Updates</a></li>
+            <li><a href="go-live.html"><i class="fas fa-broadcast-tower"></i> Go Live</a></li>
+            <li><a href="subscription.html"><i class="fas fa-crown"></i> Subscription Plans</a></li>
+            <li><a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="monetization.html"><i class="fas fa-wallet"></i> Monetization</a></li>
+            <li><a href="help.html"><i class="fas fa-question-circle"></i> Help & Support</a></li>
+            <li><a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <!-- Main Content -->
+    <div class="container main-content">
+        <div class="settings-container">
+            <div class="settings-header">
+                <h1><i class="fas fa-cog"></i> Settings</h1>
+                <p>Manage your account preferences and settings</p>
+            </div>
+            
+            <div class="settings-content">
+                <div class="settings-sidebar">
+                    <div class="settings-nav">
+                        <button class="settings-nav-item active" data-target="account">
+                            <i class="fas fa-user"></i> Account
+                        </button>
+                        <button class="settings-nav-item" data-target="privacy">
+                            <i class="fas fa-lock"></i> Privacy & Security
+                        </button>
+                        <button class="settings-nav-item" data-target="notifications">
+                            <i class="fas fa-bell"></i> Notifications
+                        </button>
+                        <button class="settings-nav-item" data-target="appearance">
+                            <i class="fas fa-paint-brush"></i> Appearance
+                        </button>
+                        <button class="settings-nav-item" data-target="streaming">
+                            <i class="fas fa-broadcast-tower"></i> Streaming
+                        </button>
+                        <button class="settings-nav-item" data-target="help">
+                            <i class="fas fa-question-circle"></i> Help & Support
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="settings-main">
+                    <!-- Account Settings -->
+                    <div class="settings-section active" id="account-section">
+                        <h2>Account Settings</h2>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-user-circle"></i> Profile Information</h3>
+                            <div class="form-group">
+                                <label for="displayName">Display Name</label>
+                                <input type="text" id="displayName" class="form-control" value="StreamerPro99">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" class="form-control" value="@streamerpro99">
+                                <small>This is your unique identifier on Live Flow</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" class="form-control" rows="4">Professional streamer and content creator. Love gaming and connecting with my community!</textarea>
+                            </div>
+                            
+                            <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-envelope"></i> Email Address</h3>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" class="form-control" value="streamer@example.com">
+                                <small>Your email is used for account notifications and login</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmEmail">Confirm Email</label>
+                                <input type="email" id="confirmEmail" class="form-control" value="streamer@example.com">
+                            </div>
+                            
+                            <button class="btn btn-primary" id="updateEmailBtn">Update Email</button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-key"></i> Change Password</h3>
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" class="form-control">
+                                <div class="password-strength">
+                                    <div class="strength-bar">
+                                        <div class="strength-fill" data-strength="0"></div>
+                                    </div>
+                                    <span class="strength-text">Password strength</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" class="form-control">
+                            </div>
+                            
+                            <button class="btn btn-primary" id="changePasswordBtn">Change Password</button>
+                        </div>
+                        
+                        <div class="settings-card danger-zone">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+                            <p>Once you delete your account, there is no going back. Please be certain.</p>
+                            
+                            <div class="danger-actions">
+                                <button class="btn btn-outline" id="exportDataBtn">
+                                    <i class="fas fa-download"></i> Export Data
+                                </button>
+                                <button class="btn btn-danger" id="deleteAccountBtn">
+                                    <i class="fas fa-trash"></i> Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Privacy & Security Settings -->
+                    <div class="settings-section" id="privacy-section">
+                        <h2>Privacy & Security</h2>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-lock"></i> Privacy Settings</h3>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="privateProfile" class="form-check-input">
+                                <label for="privateProfile" class="form-check-label">Make my profile private</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="hideFromSearch" class="form-check-input" checked>
+                                <label for="hideFromSearch" class="form-check-label">Hide my profile from search engines</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="allowMessages" class="form-check-input" checked>
+                                <label for="allowMessages" class="form-check-label">Allow direct messages from anyone</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="showActivity" class="form-check-input" checked>
+                                <label for="showActivity" class="form-check-label">Show my activity status</label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-shield-alt"></i> Security</h3>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="twoFactorAuth" class="form-check-input">
+                                <label for="twoFactorAuth" class="form-check-label">Enable Two-Factor Authentication</label>
+                            </div>
+                            
+                            <div class="sessions-list">
+                                <h4>Active Sessions</h4>
+                                
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <div class="session-device">
+                                            <i class="fas fa-desktop"></i>
+                                            <strong>Windows 10 - Chrome</strong>
+                                        </div>
+                                        <div class="session-details">
+                                            <span>Current Session</span>
+                                            <span>•</span>
+                                            <span>New York, USA</span>
+                                            <span>•</span>
+                                            <span>Now</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline">Log Out</button>
+                                </div>
+                                
+                                <div class="session-item">
+                                    <div class="session-info">
+                                        <div class="session-device">
+                                            <i class="fas fa-mobile-alt"></i>
+                                            <strong>iOS - Safari</strong>
+                                        </div>
+                                        <div class="session-details">
+                                            <span>Last active: 2 days ago</span>
+                                            <span>•</span>
+                                            <span>Chicago, USA</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline">Log Out</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-eye"></i> Data & Permissions</h3>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="dataCollection" class="form-check-input" checked>
+                                <label for="dataCollection" class="form-check-label">Allow data collection to improve my experience</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="personalizedAds" class="form-check-input">
+                                <label for="personalizedAds" class="form-check-label">Allow personalized advertising</label>
+                            </div>
+                            
+                            <button class="btn btn-outline">
+                                <i class="fas fa-download"></i> Download Your Data
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications Settings -->
+                    <div class="settings-section" id="notifications-section">
+                        <h2>Notification Settings</h2>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-bell"></i> Notification Preferences</h3>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifyEmail" class="form-check-input" checked>
+                                <label for="notifyEmail" class="form-check-label">Email Notifications</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifyPush" class="form-check-input" checked>
+                                <label for="notifyPush" class="form-check-label">Push Notifications</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifySMS" class="form-check-input">
+                                <label for="notifySMS" class="form-check-label">SMS Notifications</label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-users"></i> Community Notifications</h3>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifyNewFollowers" class="form-check-input" checked>
+                                <label for="notifyNewFollowers" class="form-check-label">New Followers</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifySubscriptions" class="form-check-input" checked>
+                                <label for="notifySubscriptions" class="form-check-label">New Subscriptions</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifyGifts" class="form-check-input" checked>
+                                <label for="notifyGifts" class="form-check-label">Gifts & Donations</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifyMentions" class="form-check-input" checked>
+                                <label for="notifyMentions" class="form-check-label">Mentions</label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-broadcast-tower"></i> Stream Notifications</h3>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifyStreamStart" class="form-check-input" checked>
+                                <label for="notifyStreamStart" class="form-check-label">When streamers I follow go live</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="notifyStreamRecommendations" class="form-check-input" checked>
+                                <label for="notifyStreamRecommendations" class="form-check-label">Stream recommendations</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Appearance Settings -->
+                    <div class="settings-section" id="appearance-section">
+                        <h2>Appearance Settings</h2>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-palette"></i> Theme</h3>
+                            
+                            <div class="theme-options">
+                                <div class="theme-option active" data-theme="dark">
+                                    <i class="fas fa-check"></i>
+                                    <div class="theme-preview dark-theme">
+                                        <div class="theme-header"></div>
+                                        <div class="theme-content">
+                                            <div class="theme-item"></div>
+                                            <div class="theme-item" style="width: 70%"></div>
+                                            <div class="theme-item" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <span>Dark</span>
+                                </div>
+                                
+                                <div class="theme-option" data-theme="light">
+                                    <i class="fas fa-check"></i>
+                                    <div class="theme-preview light-theme">
+                                        <div class="theme-header"></div>
+                                        <div class="theme-content">
+                                            <div class="theme-item"></div>
+                                            <div class="theme-item" style="width: 70%"></div>
+                                            <div class="theme-item" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <span>Light</span>
+                                </div>
+                                
+                                <div class="theme-option" data-theme="auto">
+                                    <i class="fas fa-check"></i>
+                                    <div class="theme-preview auto-theme">
+                                        <div class="theme-header"></div>
+                                        <div class="theme-content">
+                                            <div class="theme-item"></div>
+                                            <div class="theme-item" style="width: 70%"></div>
+                                            <div class="theme-item" style="width: 50%"></div>
+                                        </div>
+                                    </div>
+                                    <span>Auto</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-desktop"></i> Display Settings</h3>
+                            
+                            <div class="form-group">
+                                <label for="fontSize">Font Size</label>
+                                <input type="range" id="fontSize" min="12" max="18" value="16" step="1">
+                                <div class="range-values">
+                                    <span>Small</span>
+                                    <span>Medium</span>
+                                    <span>Large</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="zoomLevel">Zoom Level</label>
+                                <input type="range" id="zoomLevel" min="100" max="150" value="100" step="10">
+                                <div class="range-values">
+                                    <span>100%</span>
+                                    <span>125%</span>
+                                    <span>150%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="reduceMotion" class="form-check-input">
+                                <label for="reduceMotion" class="form-check-label">Reduce motion and animations</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="highContrast" class="form-check-input">
+                                <label for="highContrast" class="form-check-label">High contrast mode</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Streaming Settings -->
+                    <div class="settings-section" id="streaming-section">
+                        <h2>Streaming Settings</h2>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-broadcast-tower"></i> Stream Configuration</h3>
+                            
+                            <div class="form-group">
+                                <label for="streamKey">Stream Key</label>
+                                <div class="input-with-action">
+                                    <input type="password" id="streamKey" class="form-control" value="live_1234567890_abcdefghijklmnopqrstuvwxyz">
+                                    <button class="btn btn-outline" id="showKeyBtn">
+                                        <i class="fas fa-eye"></i> Show
+                                    </button>
+                                    <button class="btn btn-outline" id="copyKeyBtn">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                    <button class="btn btn-outline" id="resetKeyBtn">
+                                        <i class="fas fa-sync"></i> Reset
+                                    </button>
+                                </div>
+                                <small>Keep your stream key private and never share it with anyone</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="serverUrl">Server URL</label>
+                                <input type="text" id="serverUrl" class="form-control" value="rtmp://live.liveflow.com/live" readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="streamQuality">Default Stream Quality</label>
+                                <select id="streamQuality" class="form-control">
+                                    <option value="1080p">1080p (Full HD)</option>
+                                    <option value="720p" selected>720p (HD)</option>
+                                    <option value="480p">480p (SD)</option>
+                                    <option value="360p">360p</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="streamDelay">Stream Delay (seconds)</label>
+                                <input type="range" id="streamDelay" min="0" max="30" value="0" step="5">
+                                <div class="range-values">
+                                    <span>0s</span>
+                                    <span>15s</span>
+                                    <span>30s</span>
+                                </div>
+                                <small>Add delay to your stream to prevent stream sniping</small>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-video"></i> Video Settings</h3>
+                            
+                            <div class="form-group">
+                                <label for="videoBitrate">Video Bitrate (Kbps)</label>
+                                <input type="range" id="videoBitrate" min="1000" max="10000" value="6000" step="500">
+                                <div class="range-values">
+                                    <span>1000</span>
+                                    <span>5500</span>
+                                    <span>10000</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="fps">Frames Per Second (FPS)</label>
+                                <select id="fps" class="form-control">
+                                    <option value="30">30 FPS</option>
+                                    <option value="60" selected>60 FPS</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="enableHardwareAcceleration" class="form-check-input" checked>
+                                <label for="enableHardwareAcceleration" class="form-check-label">Enable Hardware Acceleration</label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-microphone"></i> Audio Settings</h3>
+                            
+                            <div class="form-group">
+                                <label for="audioBitrate">Audio Bitrate (Kbps)</label>
+                                <select id="audioBitrate" class="form-control">
+                                    <option value="64">64</option>
+                                    <option value="96">96</option>
+                                    <option value="128" selected>128</option>
+                                    <option value="160">160</option>
+                                    <option value="192">192</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="audioSampleRate">Audio Sample Rate (Hz)</label>
+                                <select id="audioSampleRate" class="form-control">
+                                    <option value="44100">44.1 kHz</option>
+                                    <option value="48000" selected>48 kHz</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="enableAudioDucking" class="form-check-input" checked>
+                                <label for="enableAudioDucking" class="form-check-label">Enable Audio Ducking</label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input type="checkbox" id="enableNoiseSuppression" class="form-check-input" checked>
+                                <label for="enableNoiseSuppression" class="form-check-label">Enable Noise Suppression</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Help & Support Settings -->
+                    <div class="settings-section" id="help-section">
+                        <h2>Help & Support</h2>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-question-circle"></i> Help Resources</h3>
+                            
+                            <div class="help-links">
+                                <a href="#" class="help-link">
+                                    <i class="fas fa-book"></i>
+                                    <span>Knowledge Base & Guides</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                
+                                <a href="#" class="help-link">
+                                    <i class="fas fa-video"></i>
+                                    <span>Video Tutorials</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                
+                                <a href="#" class="help-link">
+                                    <i class="fas fa-users"></i>
+                                    <span>Community Forums</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                
+                                <a href="#" class="help-link">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>Report a Problem</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                
+                                <a href="#" class="help-link">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>Submit a Feature Request</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-headset"></i> Contact Support</h3>
+                            
+                            <p>Our support team is available 24/7 to help you with any issues you may encounter.</p>
+                            
+                            <div class="form-group">
+                                <label for="supportTopic">What do you need help with?</label>
+                                <select id="supportTopic" class="form-control">
+                                    <option value="">Select a topic</option>
+                                    <option value="account">Account Issues</option>
+                                    <option value="streaming">Streaming Problems</option>
+                                    <option value="payment">Payment & Billing</option>
+                                    <option value="technical">Technical Issues</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="supportDescription">Please describe your issue</label>
+                                <textarea id="supportDescription" class="form-control" rows="4" placeholder="Provide as much detail as possible so we can help you quickly"></textarea>
+                            </div>
+                            
+                            <button class="btn btn-primary">Contact Support</button>
+                        </div>
+                        
+                        <div class="settings-card">
+                            <h3><i class="fas fa-info-circle"></i> About Live Flow</h3>
+                            
+                            <div class="about-info">
+                                <div class="about-item">
+                                    <span>Version</span>
+                                    <span>2.4.1 (Build 347)</span>
+                                </div>
+                                
+                                <div class="about-item">
+                                    <span>Last Updated</span>
+                                    <span>October 15, 2023</span>
+                                </div>
+                                
+                                <div class="about-item">
+                                    <span>Terms of Service</span>
+                                    <a href="#">View</a>
+                                </div>
+                                
+                                <div class="about-item">
+                                    <span>Privacy Policy</span>
+                                    <a href="#">View</a>
+                                </div>
+                                
+                                <div class="about-item">
+                                    <span>Licenses</span>
+                                    <a href="#">View</a>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-outline">
+                                <i class="fas fa-sync"></i> Check for Updates
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation (Mobile Only) -->
+    <div class="bottom-nav">
+        <a href="discover.html" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>Discover</span>
+        </a>
+        <a href="updates.html" class="nav-item">
+            <i class="fas fa-newspaper"></i>
+            <span>Updates</span>
+        </a>
+        <a href="go-live.html" class="nav-item">
+            <i class="fas fa-broadcast-tower"></i>
+            <span>Go Live</span>
+        </a>
+        <a href="subscription.html" class="nav-item">
+            <i class="fas fa-crown"></i>
+            <span>Subscription</span>
+        </a>
+        <a href="settings.html" class="nav-item active">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+    </div>
+    
+    <!-- Delete Account Modal -->
+    <div class="modal" id="deleteAccountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Delete Account</h2>
+                <button class="modal-close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Are you absolutely sure?</h3>
+                    <p>This action cannot be undone. This will permanently delete your account and remove all data associated with it.</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deleteConfirm">To confirm, type "delete my account" below</label>
+                    <input type="text" id="deleteConfirm" class="form-control" placeholder="delete my account">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn" disabled>Delete Account</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Settings saved successfully!</span>
+    </div>
+    
+    <script>
+        // Mobile Navigation
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const overlay = document.getElementById('overlay');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('open');
+            overlay.classList.add('open');
+            mobileMenuBtn.classList.add('open');
+        });
+        
+        mobileNavClose.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+            overlay.classList.remove('open');
+            mobileMenuBtn.classList.remove('open');
+        });
+        
+        overlay.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+            overlay.classList.remove('open');
+            mobileMenuBtn.classList.remove('open');
+        });
+        
+        // Settings Navigation
+        const settingsNavItems = document.querySelectorAll('.settings-nav-item');
+        const settingsSections = document.querySelectorAll('.settings-section');
+        
+        settingsNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const target = item.getAttribute('data-target');
+                
+                // Update active nav item
+                settingsNavItems.forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                item.classList.add('active');
+                
+                // Show corresponding section
+                settingsSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(`${target}-section`).classList.add('active');
+            });
+        });
+        
+        // Theme Selection
+        const themeOptions = document.querySelectorAll('.theme-option');
+        
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                themeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                
+                const theme = option.getAttribute('data-theme');
+                // Here you would typically set the theme in your app
+                showToast(`Theme changed to ${theme} mode`);
+            });
+        });
+        
+        // Show/Hide Stream Key
+        const showKeyBtn = document.getElementById('showKeyBtn');
+        const streamKeyInput = document.getElementById('streamKey');
+        
+        showKeyBtn.addEventListener('click', () => {
+            if (streamKeyInput.type === 'password') {
+                streamKeyInput.type = 'text';
+                showKeyBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide';
+            } else {
+                streamKeyInput.type = 'password';
+                showKeyBtn.innerHTML = '<i class="fas fa-eye"></i> Show';
+            }
+        });
+        
+        // Copy Stream Key
+        const copyKeyBtn = document.getElementById('copyKeyBtn');
+        
+        copyKeyBtn.addEventListener('click', () => {
+            streamKeyInput.select();
+            document.execCommand('copy');
+            showToast('Stream key copied to clipboard');
+        });
+        
+        // Reset Stream Key
+        const resetKeyBtn = document.getElementById('resetKeyBtn');
+        
+        resetKeyBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to reset your stream key? This will invalidate your current key.')) {
+                // In a real app, you would make an API call to reset the key
+                showToast('Stream key reset successfully');
+            }
+        });
+        
+        // Password Strength
+        const newPasswordInput = document.getElementById('newPassword');
+        const strengthFill = document.querySelector('.strength-fill');
+        const strengthText = document.querySelector('.strength-text');
+        
+        newPasswordInput.addEventListener('input', () => {
+            const password = newPasswordInput.value;
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 25;
+            if (/[A-Z]/.test(password)) strength += 25;
+            if (/[0-9]/.test(password)) strength += 25;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+            
+            strengthFill.style.width = `${strength}%`;
+            
+            if (strength < 50) {
+                strengthFill.style.backgroundColor = '#eb0400';
+                strengthText.textContent = 'Weak password';
+            } else if (strength < 100) {
+                strengthFill.style.backgroundColor = '#eab300';
+                strengthText.textContent = 'Medium password';
+            } else {
+                strengthFill.style.backgroundColor = '#00d084';
+                strengthText.textContent = 'Strong password';
+            }
+        });
+        
+        // Delete Account Modal
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+        const deleteAccountModal = document.getElementById('deleteAccountModal');
+        const deleteConfirmInput = document.getElementById('deleteConfirm');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const modalCloseButtons = document.querySelectorAll('[data-dismiss="modal"]');
+        
+        deleteAccountBtn.addEventListener('click', () => {
+            deleteAccountModal.classList.add('show');
+        });
+        
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                deleteAccountModal.classList.remove('show');
+            });
+        });
+        
+        deleteConfirmInput.addEventListener('input', () => {
+            confirmDeleteBtn.disabled = deleteConfirmInput.value !== 'delete my account';
+        });
+        
+        confirmDeleteBtn.addEventListener('click', () => {
+            // In a real app, you would make an API call to delete the account
+            showToast('Account deletion requested. Check your email for confirmation.');
+            deleteAccountModal.classList.remove('show');
+        });
+        
+        // Save Buttons
+        const saveButtons = document.querySelectorAll('.btn-primary');
+        
+        saveButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                showToast('Settings saved successfully!');
+            });
+        });
+        
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Logout function
+        function logout() {
+            // In a real app, you would clear the authentication state
+            showToast('Logged out successfully');
+        }
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial password strength
+            newPasswordInput.dispatchEvent(new Event('input'));
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === deleteAccountModal) {
+                    deleteAccountModal.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
